@@ -1,0 +1,14 @@
+.env
+.env.*
+
+.vscode/
+
+.idea/
+
+*.log
+
+node_modules/
+
+__pycache__/
+
+.DS_Store
