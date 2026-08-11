@@ -1,12 +1,16 @@
+# Exploração manual black-box
+
 ## Motivação
 
-Este documento tem por finalidade fazer o mapeamento inicial sobre o design funcional da aplicação, ainda sem adentrar em uma análise técnica profunda.
+Este documento registra uma exploração manual inicial da aplicação pela perspectiva de um usuário, sem conhecimento prévio de como o sistema foi implementado (black-box).
 
-### 0. Contexto da aplicação
+O objetivo é identificar funcionalidades, dados, pontos de entrada e componentes percebidos. As hipóteses e informações desconhecidas encontradas aqui serão verificadas posteriormente por meio da análise do código-fonte.
+
+## 0. Contexto da aplicação
 
 Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercialização de sucos.
 
-### 1. Atores da aplicação
+## 1. Atores da aplicação
 
 | Ator | Interesse | Autenticado? |
 |----------|----------|----------|
@@ -14,7 +18,7 @@ Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercia
 | Cliente | Realiza compras na loja, acompanha suas compras. | Sim |
 | Lojista (hipótese) | Faz a gestão de produtos, estoque, e vendas. | Verificar |
 
-### 2. Principais funcionalidades
+## 2. Principais funcionalidades
 
 | Funcionalidade | Autenticado? |
 |----------|----------|
@@ -57,7 +61,7 @@ Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercia
 | Escrever review do produto | Sim |
 | Acompanhar entrega do pedido | Sim |
 
-### 3. Dados de entrada e saída
+## 3. Dados de entrada e saída
 
 | Dado | Entrada | Saída |
 |----------|----------|----------|
@@ -99,33 +103,33 @@ Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercia
 | Imagens no photo wall | Não | Sim |
 
 
-### 4. Componentes e fronteiras percebidas
+## 4. Componentes e fronteiras percebidas
 
-#### Componentes observados
+### Componentes observados
 
 - Usuário
 - Navegador
 - Aplicação Juice Shop executada em container
 
-#### Fluxos observados
+### Fluxos observados
 
 - Navegador envia requisições HTTP para a aplicação.
 - Aplicação retorna páginas, dados e arquivos ao navegador.
 
-#### Trust boundaries percebidas
+### Trust boundaries percebidas
 
 - Entre o navegador, controlável pelo usuário, e a aplicação.
 - Entre usuários não autenticados e funcionalidades que exigem autenticação.
 - Entre usuários comuns e possíveis funções administrativas (hipótese).
 
-#### Componentes ainda desconhecidos
+### Componentes ainda desconhecidos
 
 - Banco de dados ou outro mecanismo de persistência.
 - Implementação da autenticação.
 - Processamento dos pagamentos.
 - Implementação do assistente.
 
-#### Interfaces HTTP observadas
+### Interfaces HTTP observadas
 
 - /rest/admin/application-version
 - /rest/admin/application-configuration
@@ -147,7 +151,7 @@ Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercia
 - /rest/saveLoginIp
 - /api/Challenges/
 
-### 5. Pontos de entrada
+## 5. Pontos de entrada
 
 - Formulário de login
 - Formulário de criação de conta
@@ -162,7 +166,7 @@ Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercia
 - Chat/Assistente
 - Parâmetros, corpo e identificadores das requisições HTTP
 
-### 6. Análise de impacto e criticidade
+## 6. Análise de impacto e criticidade
 
 | Dados | Impacto | Severidade inicial |
 |----------|----------|----------|
