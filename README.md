@@ -44,3 +44,10 @@ git -C target/juice-shop rev-parse HEAD
 ```
 
 O segundo comando deve retornar o commit `f915bddd82790d0f3018902d36ae9b4241a5f51f`. O código-fonte será armazenado em `target/juice-shop`, diretório ignorado pelo Git.
+
+## Documentação
+
+Os documentos seguem a ordem de leitura abaixo:
+
+1. [Exploração manual black-box](docs/01-application-assessment.md) — Levantamento da aplicação pela perspectiva de um usuário.
+2. [Descoberta arquitetural](docs/02-architecture-discovery.md) — Principais fluxos identificados no código-fonte e perguntas para o Threat Modeling.
