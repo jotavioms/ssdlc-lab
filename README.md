@@ -49,5 +49,6 @@ O segundo comando deve retornar o commit `f915bddd82790d0f3018902d36ae9b4241a5f5
 
 Os documentos seguem a ordem de leitura abaixo:
 
-1. [Exploração manual black-box](docs/01-application-assessment.md) — Levantamento da aplicação pela perspectiva de um usuário.
-2. [Descoberta arquitetural](docs/02-architecture-discovery.md) — Principais fluxos identificados no código-fonte e perguntas para o Threat Modeling.
+1. [Exploração Manual Black-box](docs/01-application-assessment.md) — Levantamento da aplicação pela perspectiva de um usuário.
+2. [Descoberta Arquitetural](docs/02-architecture-discovery.md) — Principais fluxos identificados no código-fonte e perguntas para o Threat Modeling.
+3. [Risk Assessment](docs/03-risk-assessment.md) — Identificação dos ativos e das consequências de violações de confidencialidade, integridade e disponibilidade.

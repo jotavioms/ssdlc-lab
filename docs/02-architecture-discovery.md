@@ -1,4 +1,4 @@
-# Descoberta arquitetural
+# Descoberta Arquitetural
 
 ## Motivação
 
