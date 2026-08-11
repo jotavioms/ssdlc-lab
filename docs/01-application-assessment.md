@@ -1,4 +1,4 @@
-# Exploração manual black-box
+# Exploração Manual Black-box
 
 ## Motivação
 
