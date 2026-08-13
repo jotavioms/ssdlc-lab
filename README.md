@@ -47,8 +47,11 @@ O segundo comando deve retornar o commit `f915bddd82790d0f3018902d36ae9b4241a5f5
 
 ## Documentação
 
-Os documentos seguem a ordem de leitura abaixo:
+Os documentos seguem uma sequência em que o resultado de cada etapa serve como entrada para a próxima:
 
-1. [Exploração Manual Black-box](docs/01-application-assessment.md) — Levantamento da aplicação pela perspectiva de um usuário.
-2. [Descoberta Arquitetural](docs/02-architecture-discovery.md) — Principais fluxos identificados no código-fonte e perguntas para o Threat Modeling.
-3. [Risk Assessment](docs/03-risk-assessment.md) — Identificação dos ativos e das consequências de violações de confidencialidade, integridade e disponibilidade.
+| Etapa | Entrada | Produz | Usado em |
+|---|---|---|---|
+| 1. [Exploração Manual Black-box](docs/01-application-assessment.md) | Uso manual da aplicação como usuário | Atores, funcionalidades, dados e pontos de entrada percebidos | Etapas 2, 3 e 4 |
+| 2. [Descoberta Arquitetural](docs/02-architecture-discovery.md) | Observações da etapa 1 e código-fonte | Componentes, caminhos dos dados e mudanças de controle | Etapas 3 e 4 |
+| 3. [Risk Assessment](docs/03-risk-assessment.md) | Funcionalidades e dados da etapa 1; componentes e fluxos da etapa 2 | Ativos e impactos | Etapa 4 e priorização dos riscos |
+| 4. [Threat Modeling com STRIDE](docs/04-threat-model.md) | Fluxos da etapa 2; ativos e impactos da etapa 3 | Ameaças possíveis | Priorização dos riscos e testes de segurança |
