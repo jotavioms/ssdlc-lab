@@ -2,9 +2,7 @@
 
 ## Motivação
 
-Este documento complementa o levantamento black-box com os principais fluxos identificados no código-fonte do Juice Shop. O objetivo é criar uma base sólida para o Threat Modeling, indicando quais dados trafegam, onde o controle muda e quais perguntas de segurança precisam ser respondidas.
-
-> *Nesta etapa, recomenda-se o apoio de um agente de IA para acelerar a leitura do código-fonte, especialmente em aplicações extensas ou pouco conhecidas. Um prompt de apoio está disponível ao final deste documento. Todas as informações produzidas por IA devem ser validadas pelo profissional responsável.*
+Este documento complementa o levantamento manual com os principais fluxos identificados no código-fonte do Juice Shop. O objetivo é criar uma base sólida para o Threat Modeling, indicando quais dados trafegam, onde o controle muda e quais perguntas de segurança precisam ser respondidas.
 
 ## Diagrama
 
@@ -21,23 +19,20 @@ Este documento complementa o levantamento black-box com os principais fluxos ide
 | Backend → servidor LLM (configurado) | Mensagens, prompts e chamadas de ferramentas | Sim: o processamento ocorre em outro serviço | Quais dados saem da aplicação e como as respostas e chamadas de ferramentas são validadas? | `routes/chat.ts:108` |
 | Requisição de cliente → funções privilegiadas | Requisições autenticadas | Sim: o nível de privilégio muda | A autorização diferencia corretamente clientes, contabilidade e administradores? | `lib/insecurity.ts:142`, `server.ts:431` |
 
+## Como reproduzir esta etapa
+
+- Use o levantamento manual para definir o escopo da leitura.
+- Rastreie no código apenas os principais fluxos de dados e privilégios.
+- Registre mudanças de controle e uma evidência `arquivo:linha`.
+- Represente os componentes e fluxos em um diagrama simples.
+- Valide no código todas as informações produzidas com apoio de IA.
+
 ## Prompt sugerido
 
 ```text
-Analise o código-fonte desta aplicação para mapear somente os principais fluxos relevantes para Threat Modeling. Leia primeiro as instruções do repositório e considere a revisão ou o commit informado como escopo da análise.
+Analise o código-fonte desta aplicação e mapeie somente os principais fluxos relevantes para Threat Modeling: autenticação, dados sensíveis ou de negócio, arquivos, serviços externos e funções privilegiadas.
 
-Rastreie os fluxos entre navegador, backend, armazenamentos de dados, sistema de arquivos, serviços externos e níveis de privilégio. Inclua somente fluxos que transportem autenticação, dados sensíveis ou de negócio, uploads, integrações externas ou acesso privilegiado.
+Gere uma tabela Markdown com as colunas `Fluxo`, `Dados`, `Mudança de controle?`, `Pergunta para o Threat Modeling` e `Evidência`. Considere mudança de controle entre usuários, processos, serviços ou privilégios diferentes. Cite evidências como `arquivo:linha` e sinalize hipóteses ou informações não confirmadas.
 
-Para cada fluxo, informe:
-- Origem e destino;
-- Dados transportados;
-- Se existe mudança de controle e o motivo em uma frase;
-- Uma pergunta de segurança que deverá ser respondida no Threat Modeling;
-- Evidência no formato `arquivo:linha`.
-
-Considere que há mudança de controle quando os lados pertencem a usuários, processos, serviços externos ou níveis de privilégio diferentes. Não trate chamadas entre funções internas com o mesmo privilégio como mudança de controle.
-
-Como output, gere somente uma tabela Markdown com as colunas: `Fluxo`, `Dados`, `Mudança de controle?`, `Pergunta para o Threat Modeling` e `Evidência`. Sinalize na própria célula quando algo for inferência, desconhecido ou apenas configurado sem validação durante a execução.
-
-Não altere arquivos, não procure vulnerabilidades e não liste endpoints, classes ou dependências individuais.
+Não altere arquivos, não procure vulnerabilidades e não liste componentes internos sem relação com esses fluxos. Retorne somente a tabela.
 ```

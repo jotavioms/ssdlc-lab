@@ -22,3 +22,21 @@ De posse dos principais componentes, dados e funcionalidades, precisamos identif
 | Exportação e exclusão de dados | Permitir o atendimento correto às solicitações de privacidade dos clientes. | Violação da privacidade, impacto legal e perda de confiança dos clientes. | Exportação incorreta, exclusão indevida de informações e descumprimento das solicitações do cliente. | Impossibilidade de atender solicitações de privacidade e aumento do impacto legal e operacional. |
 | Funcionamento da aplicação | Manter a loja disponível e suas operações funcionando corretamente. | N/A: o funcionamento do serviço não contém informação confidencial por si só. | Operações e resultados incorretos, perdas financeiras e quebra de confiança na aplicação. | Interrupção do serviço, perda de vendas e impossibilidade de atender clientes. |
 | Chaves e configurações de segurança | Preservar os mecanismos usados para autenticação e proteção da aplicação. | Acesso indevido a contas e dados, fraudes e violação da privacidade dos clientes. | Falha ou contorno dos controles de segurança e perda de confiança nas identidades e operações. | Interrupção da autenticação ou de outras funções que dependem dessas configurações. |
+
+## Como reproduzir esta etapa
+
+- Use os dados e funcionalidades da exploração manual.
+- Relacione-os aos componentes e fluxos da descoberta arquitetural.
+- Agrupe como ativos somente o que possui valor para usuários ou para a operação.
+- Descreva as consequências da perda de confidencialidade, integridade e disponibilidade.
+- Use `N/A` quando uma propriedade não se aplicar ao ativo.
+
+## Prompt sugerido
+
+```text
+Analise o levantamento manual e a descoberta arquitetural desta aplicação para identificar os ativos relevantes ao Risk Assessment.
+
+Gere uma tabela Markdown com as colunas `Ativo`, `Por que proteger?`, `Consequência da perda de Confidencialidade`, `Consequência da perda de Integridade` e `Consequência da perda de Disponibilidade`. Agrupe itens semelhantes, descreva consequências para usuários ou para a operação e use `N/A` quando uma propriedade não se aplicar.
+
+Não procure vulnerabilidades, não calcule riscos e não altere arquivos. Retorne somente a tabela.
+```

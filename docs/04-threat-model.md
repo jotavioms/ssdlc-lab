@@ -4,22 +4,20 @@
 
 Este documento aplica as perguntas do STRIDE aos principais fluxos da aplicação para identificar o que pode dar errado. As ameaças levantadas são hipóteses que serão priorizadas e validadas posteriormente por controles e testes de segurança.
 
-## Diagrama
-
-Esta análise utiliza como base o [diagrama da descoberta arquitetural](02-architecture-discovery.md#diagrama).
-
 ## Escopo
 
-- Autenticação: Login, envio de email e senha e retorno do JWT.
-- Conta e privacidade: Registro, perfil, senha, 2FA, histórico de IPs, exportação e exclusão de dados.
-- Catálogo e conteúdo: Produtos, busca, avaliações, feedbacks, reclamações e mural de fotos.
-- Carrinho e pedidos: Carrinho, checkout, pedidos, entrega e recycling box.
-- Pagamentos: Cartões, carteira digital e Deluxe Membership.
-- Endereços: Cadastro, consulta, alteração e exclusão.
-- Arquivos: Uploads, imagens externas, arquivos armazenados e PDFs de pedidos.
-- Assistente de IA: Mensagens, prompts, respostas e chamadas de ferramentas.
-- Funções privilegiadas: Operações restritas por autenticação ou perfil de acesso.
-- Persistência: Leitura e gravação de dados no SQLite e no sistema de arquivos.
+| Fluxo | Funcionalidades e dados agrupados |
+|---|---|
+| Autenticação | Login, envio de email e senha e retorno do JWT |
+| Conta e privacidade | Registro, perfil, senha, 2FA, histórico de IPs, exportação e exclusão de dados |
+| Catálogo e conteúdo | Produtos, busca, avaliações, feedbacks, reclamações e mural de fotos |
+| Carrinho e pedidos | Carrinho, checkout, pedidos, entrega e recycling box |
+| Pagamentos | Cartões, carteira digital e Deluxe Membership |
+| Endereços | Cadastro, consulta, alteração e exclusão |
+| Arquivos | Uploads, imagens externas, arquivos armazenados e PDFs de pedidos |
+| Assistente de IA | Mensagens, prompts, respostas e chamadas de ferramentas |
+| Funções privilegiadas | Operações restritas por autenticação ou perfil de acesso |
+| Persistência | Leitura e gravação de dados no SQLite e no sistema de arquivos |
 
 ## Categorias STRIDE
 
@@ -64,3 +62,21 @@ Esta análise utiliza como base o [diagrama da descoberta arquitetural](02-archi
 | T10 | Persistência | Tampering | Alteração não autorizada de registros no SQLite ou de arquivos armazenados. | Contas e identidades dos clientes; pedidos e checkout; dados de pagamento; arquivos enviados e armazenados |
 | I08 | Persistência | Information Disclosure | Exposição do banco de dados ou de arquivos armazenados. | Contas e identidades dos clientes; dados de endereço; dados de pagamento; pedidos e checkout; arquivos enviados e armazenados |
 | D05 | Persistência | Denial of Service | Exclusão, corrupção ou indisponibilidade do banco de dados ou dos arquivos. | Funcionamento da aplicação |
+
+## Como reproduzir esta etapa
+
+- Agrupe as funcionalidades em fluxos relevantes à segurança.
+- Aplique as seis perguntas do STRIDE a cada fluxo.
+- Registre somente ameaças aplicáveis e evite cenários repetidos.
+- Relacione cada ameaça a um ativo do Risk Assessment.
+- Trate os cenários como hipóteses até que sejam validados.
+
+## Prompt sugerido
+
+```text
+Use os fluxos da descoberta arquitetural e os ativos do Risk Assessment para criar um Threat Model com STRIDE.
+
+Agrupe funcionalidades relacionadas nos escopos definidos neste documento. Aplique as seis categorias STRIDE a cada escopo, mas registre somente ameaças aplicáveis e sem repetição. Gere uma tabela Markdown com as colunas `ID`, `Fluxo`, `Categoria`, `Ameaça` e `Ativo afetado`. Use IDs formados pela inicial da categoria e um número sequencial.
+
+Os cenários são hipóteses, não vulnerabilidades comprovadas. Não realize testes, não altere arquivos e retorne somente a tabela.
+```

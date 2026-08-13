@@ -2,179 +2,53 @@
 
 ## Motivação
 
-Este documento registra uma exploração manual inicial da aplicação pela perspectiva de um usuário, sem conhecimento prévio de como o sistema foi implementado (black-box).
+Este documento registra uma exploração manual do Juice Shop pela perspectiva de um usuário, sem acesso prévio à implementação. O objetivo é identificar o que existe na aplicação antes de verificar seu funcionamento interno.
 
-O objetivo é identificar funcionalidades, dados, pontos de entrada e componentes percebidos. As hipóteses e informações desconhecidas encontradas aqui serão verificadas posteriormente por meio da análise do código-fonte.
+## Atores
 
-## 0. Contexto da aplicação
+| Ator | Acesso observado |
+|---|---|
+| Visitante | Catálogo, busca, carrinho, registro, feedback, assistente e mural de fotos |
+| Cliente | Conta, endereços, pagamentos, pedidos, arquivos e privacidade |
+| Lojista (hipótese) | Gestão da loja e funções administrativas |
 
-Juice Shop v20.1.1 é uma aplicação de vendas (e-commerce) voltada à comercialização de sucos.
+## Funcionalidades e dados
 
-## 1. Atores da aplicação
+| Área | Funcionalidades | Principais dados | Acesso observado |
+|---|---|---|---|
+| Autenticação e conta | Registro, login, perfil, senha e 2FA | Email, senha, username, pergunta e resposta de segurança | Público e autenticado |
+| Catálogo e conteúdo | Produtos, busca, avaliações, feedbacks, reclamações e mural | Produtos, preços, avaliações, mensagens e imagens | Público e autenticado |
+| Carrinho e pedidos | Carrinho, checkout, histórico, entrega e recycling box | Itens, quantidades, valores, pedidos e status | Público e autenticado |
+| Pagamentos | Cartões, carteira e Deluxe Membership | Cartão, validade e saldo | Autenticado |
+| Endereços | Cadastro, consulta, alteração e exclusão | Nome, telefone e endereço postal | Autenticado |
+| Arquivos | Foto de perfil, imagem externa e PDF do pedido | Arquivos, URLs e documentos gerados | Autenticado |
+| Privacidade | Histórico de IPs, exportação e exclusão de dados | IPs e dados pessoais exportados ou excluídos | Autenticado |
+| Assistente de IA | Envio e recebimento de mensagens | Texto da conversa | Público |
 
-| Ator | Interesse | Autenticado? |
-|----------|----------|----------|
-| Visitante | Analisa os produtos da loja sem compromisso de compra. | Não |
-| Cliente | Realiza compras na loja, acompanha suas compras. | Sim |
-| Lojista (hipótese) | Faz a gestão de produtos, estoque, e vendas. | Verificar |
+## Pontos de entrada
 
-## 2. Principais funcionalidades
+| Tipo | Exemplos observados |
+|---|---|
+| Formulários | Login, registro, perfil, endereço, pagamento e feedback |
+| Parâmetros HTTP | IDs, busca, corpo e parâmetros das requisições |
+| Arquivos e URLs | Uploads e links externos de imagem |
+| Operações sensíveis | Alteração de senha, 2FA, checkout, exportação e exclusão de dados |
+| Integrações percebidas | Assistente de IA e compartilhamento externo |
 
-| Funcionalidade | Autenticado? |
-|----------|----------|
-| Listagem de produtos | Não |
-| Adicionar produto ao carrinho | Não |
-| Busca por produto | Não |
-| Carrinho de compras | Não |
-| Mudar a linguagem | Não |
-| Fazer login | Não |
-| Submeter um feedback | Não |
-| Assistente de IA | Não |
-| Mural de fotos | Não |
-| Registro de conta | Não |
-| Upload de foto de usuário | Sim |
-| Link de imagem de usuário | Sim |
-| Alteração de username | Sim |
-| Listar histórico de compras | Sim |
-| Solicitar recycling box | Sim |
-| Cadastrar um novo endereço | Sim |
-| Listar endereços cadastrados | Sim |
-| Editar endereço cadastrado | Sim |
-| Excluir endereço cadastrado | Sim |
-| Adicionar método de pagamento | Sim |
-| Listar métodos de pagamento | Sim |
-| Excluir método de pagamento | Sim |
-| Adicionar fundos na carteira digital | Sim |
-| Exportação de dados | Sim |
-| Exclusão de dados (GDPR/LGPD) | Sim |
-| Alterar senha | Sim |
-| Configurar 2FA | Sim |
-| Histórico de IPs logados | Sim |
-| Checkout - Selecionar endereço de entrega | Sim |
-| Checkout - Escolher método de entrega | Sim |
-| Checkout - Escolher método de pagamento | Sim |
-| Checkout - Finalizar pagamento | Sim |
-| Checkout - Dados da compra | Sim |
-| Checkout - Compartilhar pedido no Twitter | Sim |
-| Checkout - Imprimir PDF do pedido | Sim |
-| Comprar Deluxe Membership | Sim |
-| Escrever review do produto | Sim |
-| Acompanhar entrega do pedido | Sim |
+## Como reproduzir esta etapa
 
-## 3. Dados de entrada e saída
+- Execute a aplicação em um ambiente local e descartável.
+- Navegue como visitante e cliente, sem consultar o código-fonte.
+- Agrupe atores, funcionalidades, dados e pontos de entrada por área.
+- Marque como hipótese tudo o que não puder ser confirmado pela interface.
+- Não teste vulnerabilidades nesta etapa.
 
-| Dado | Entrada | Saída |
-|----------|----------|----------|
-| Nome do produto | Sim (busca) | Sim (listagem) |
-| Preço do produto | Não | Sim (listagem) |
-| Idioma do site | Sim | Não diretamente |
-| Email | Sim (login, registro) | Sim (profile, recycle) |
-| Senha | Sim (login, registro) | Não |
-| Pergunta de segurança | Sim (registro, erasure) | Sim |
-| Resposta de segurança | Sim (registro, erasure) | Não |
-| Arquivo de imagem | Sim (profile) | Sim (profile) |
-| Link de imagem | Sim (profile) | Sim (profile) |
-| Username | Sim (profile) | Sim (profile) |
-| Quantidade de itens no pedido | Não | Sim (order) |
-| Valor total do pedido | Não | Sim |
-| Avaliação do produto | Sim | Sim |
-| ID do pedido | Não | Sim (pedido) |
-| Status da entrega | Não | Sim (pedido) |
-| Quantidade de recycling boxes | Sim | Sim |
-| Endereço - País | Sim (endereço) | Sim (endereço, recycling) |
-| Endereço - Nome | Sim (endereço) | Sim (endereço, recycling) |
-| Endereço - Telefone | Sim (endereço) | Sim (endereço, recycling) |
-| Endereço - ZIP Code | Sim (endereço) | Sim (endereço, recycling) |
-| Endereço - Cidade | Sim (endereço) | Sim (endereço, recycling) |
-| Endereço - Estado | Sim (endereço) | Sim (endereço, recycling) |
-| Método de pagamento - Nome | Sim (pagamento) | Sim (pagamento) |
-| Método de pagamento - Número do cartão | Sim (pagamento) | Sim (pagamento - mascarado) |
-| Método de pagamento - Mês de expiração | Sim (pagamento) | Sim (pagamento) |
-| Método de pagamento - Ano de expiração | Sim (pagamento) | Sim (pagamento) |
-| Quantia da carteira digital | Sim (carteira) | Sim (carteira) |
-| Política de privacidade | Não | Sim |
-| Formato da exportação de dados | Sim | Não |
-| Token 2FA | Sim | Não |
-| IP logado | Não | Sim |
-| Mensagem de feedback | Sim | Não |
-| Captcha do feedback | Sim | Não |
-| Mensagem de reclamação | Sim | Não |
-| Texto no chat de IA | Sim | Sim |
-| Imagens no photo wall | Não | Sim |
+## Prompt sugerido
 
+```text
+Com base nas minhas anotações de exploração manual desta aplicação, organize somente o que foi observado pela perspectiva do usuário.
 
-## 4. Componentes e fronteiras percebidas
+Gere três tabelas Markdown: `Atores`, `Funcionalidades e dados` e `Pontos de entrada`, seguindo as mesmas colunas deste documento. Agrupe itens semelhantes por área, preserve hipóteses e não deduza arquitetura, vulnerabilidades ou controles internos.
 
-### Componentes observados
-
-- Usuário
-- Navegador
-- Aplicação Juice Shop executada em container
-
-### Fluxos observados
-
-- Navegador envia requisições HTTP para a aplicação.
-- Aplicação retorna páginas, dados e arquivos ao navegador.
-
-### Trust boundaries percebidas
-
-- Entre o navegador, controlável pelo usuário, e a aplicação.
-- Entre usuários não autenticados e funcionalidades que exigem autenticação.
-- Entre usuários comuns e possíveis funções administrativas (hipótese).
-
-### Componentes ainda desconhecidos
-
-- Banco de dados ou outro mecanismo de persistência.
-- Implementação da autenticação.
-- Processamento dos pagamentos.
-- Implementação do assistente.
-
-### Interfaces HTTP observadas
-
-- /rest/admin/application-version
-- /rest/admin/application-configuration
-- /rest/user/whoami
-- /api/Quantitys/
-- /rest/products/search
-- /api/Recycles/
-- /api/Cards
-- /rest/languages
-- /rest/basket/id
-- /rest/wallet/balance
-- /rest/user/data-export
-- /api/dataerasure
-- /rest/user/change-password
-- /rest/captcha/
-- /api/Feedbacks/
-- /api/Complaints/
-- /rest/deluxe-membership
-- /rest/saveLoginIp
-- /api/Challenges/
-
-## 5. Pontos de entrada
-
-- Formulário de login
-- Formulário de criação de conta
-- Formulários CRUD (endereço, pagamento)
-- Formulário de alteração de senha
-- Configuração de 2FA
-- Exportação/exclusão de dados
-- Adição de fundos
-- Busca de produtos
-- Upload e URL externa de imagem
-- Comentários, feedbacks e reclamações
-- Chat/Assistente
-- Parâmetros, corpo e identificadores das requisições HTTP
-
-## 6. Análise de impacto e criticidade
-
-| Dados | Impacto | Severidade inicial |
-|----------|----------|----------|
-| Login, senha, recuperação e 2FA | Comprometimento da conta | Crítico |
-| Endereços, pedidos, IPs e exportação | Exposição de dados pessoais | Alto |
-| Métodos de pagamento e carteira | Impacto financeiro | Crítico |
-| Upload e links de imagem | Armazenamento e processamento de conteúdo malicioso | Médio |
-| Exclusão de dados | Ação destrutiva e impacto de disponibilidade/integridade | Crítico |
-| Funções administrativas (hipótese) | Alto privilégio | Crítico |
-| Checkout e pedidos | Integridade das transações | Alto |
-| APIs que recebem IDs | Possível acesso indevido a objetos de outros usuários (hipótese) | Médio |
+Não altere arquivos. Retorne somente as três tabelas.
+```
